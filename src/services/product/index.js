@@ -1,7 +1,7 @@
 import express from "express";
 import { products } from "../../data/product.js";
 import { Product, Review } from "../../db/models/index.js";
-import { Op, Sequelize } from "sequelize";
+// import { Op, Sequelize } from "sequelize";
 const router = express.Router();
 
 router
