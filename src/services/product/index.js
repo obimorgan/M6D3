@@ -1,5 +1,5 @@
 import express from "express";
-// import { products } from "../../data/articles.js";
+import { products } from "../../data/product.js";
 import { Product, Review } from "../../db/models/index.js";
 import { Op, Sequelize } from "sequelize";
 const router = express.Router();
@@ -8,39 +8,7 @@ router
   .route("/")
   .get(async (req, res, next) => {
     try {
-      const articles = await Article.findAll({
-        include: Product,
-        where: {
-          ...(req.query.search && {
-            [Op.or]: [
-              {
-                title: { [Op.iLike]: `%${req.query.search}%` },
-              },
-              {
-                content: { [Op.iLike]: `%${req.query.search}%` },
-              },
-              //Option 1
-              {
-                "$user.name$": {
-                  [Op.iLike]: "%" + req.query.search + "%",
-                },
-              },
-              //Option 2
-              // {
-              //   name: Sequelize.where(Sequelize.col(`"poduct.name"`), {
-              //     [Op.iLike]: "%" + req.query.search + "%",
-              //   }),
-              // },
-            ],
-          }),
-
-          ...(req.query.category && {
-            category: {
-              [Op.in]: req.query.category.split(","),
-            },
-          }),
-        },
-      });
+      const product = await Product.findAll();
       res.send(product);
     } catch (e) {
       console.log(e);

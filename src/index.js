@@ -8,8 +8,8 @@ const server = express();
 
 server.use(cors());
 server.use(express.json());
-server.use("/product", productRouter);
-server.use("/review", reviewRouter);
+server.use("/products", productRouter);
+server.use("/reviews", reviewRouter);
 
 server.listen(process.env.PORT || 3000, async () => {
   console.log("server is running on port ", process.env.PORT || 3000);
