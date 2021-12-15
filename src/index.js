@@ -1,6 +1,6 @@
 import express from "express";
-import usersRouter from "./services/users/index.js";
-import articlesRouter from "./services/articles/index.js";
+import productRouter from "./services/product/index.js";
+import reviewRouter from "./services/review/index.js";
 import cors from "cors";
 import sequelize, { testDB } from "./db/index.js";
 

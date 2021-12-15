@@ -4,7 +4,7 @@ import sequelize from "../index.js";
 import s from "sequelize";
 const { DataTypes } = s;
 
-const Review = sequelize.define("review", {
+const Reviews = sequelize.define("reviews", {
   id: {
     primaryKey: true,
     type: DataTypes.UUID,
@@ -18,10 +18,10 @@ const Review = sequelize.define("review", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  productId: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
+  // productId: {
+  //   type: DataTypes.STRING,
+  //   allowNull: false,
+  // },
 });
 
-export default Review;
+export default Reviews;

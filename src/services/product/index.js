@@ -6,47 +6,47 @@ const router = express.Router();
 
 router
   .route("/")
-//   .get(async (req, res, next) => {
-//     try {
-//       const articles = await Article.findAll({
-//         include: Product,
-//         where: {
-//           ...(req.query.search && {
-//             [Op.or]: [
-//               {
-//                 title: { [Op.iLike]: `%${req.query.search}%` },
-//               },
-//               {
-//                 content: { [Op.iLike]: `%${req.query.search}%` },
-//               },
-//               //Option 1
-//               {
-//                 "$user.name$": {
-//                   [Op.iLike]: "%" + req.query.search + "%",
-//                 },
-//               },
-//               //Option 2
-//               // {
-//               //   name: Sequelize.where(Sequelize.col(`"poduct.name"`), {
-//               //     [Op.iLike]: "%" + req.query.search + "%",
-//               //   }),
-//               // },
-//             ],
-//           }),
+  .get(async (req, res, next) => {
+    try {
+      const articles = await Article.findAll({
+        include: Product,
+        where: {
+          ...(req.query.search && {
+            [Op.or]: [
+              {
+                title: { [Op.iLike]: `%${req.query.search}%` },
+              },
+              {
+                content: { [Op.iLike]: `%${req.query.search}%` },
+              },
+              //Option 1
+              {
+                "$user.name$": {
+                  [Op.iLike]: "%" + req.query.search + "%",
+                },
+              },
+              //Option 2
+              // {
+              //   name: Sequelize.where(Sequelize.col(`"poduct.name"`), {
+              //     [Op.iLike]: "%" + req.query.search + "%",
+              //   }),
+              // },
+            ],
+          }),
 
-//           ...(req.query.category && {
-//             category: {
-//               [Op.in]: req.query.category.split(","),
-//             },
-//           }),
-//         },
-//       });
-//       res.send(product);
-//     } catch (e) {
-//       console.log(e);
-//       next(e);
-//     }
-//   })
+          ...(req.query.category && {
+            category: {
+              [Op.in]: req.query.category.split(","),
+            },
+          }),
+        },
+      });
+      res.send(product);
+    } catch (e) {
+      console.log(e);
+      next(e);
+    }
+  })
   .post(async (req, res, next) => {
     try {
       const product = await Product.create(req.body);

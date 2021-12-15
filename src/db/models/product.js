@@ -23,7 +23,7 @@ const Product = sequelize.define("product", {
     allowNull: false,
   },
   price: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.FLOAT,
     allowNull: false,
   },
   image_url: {
