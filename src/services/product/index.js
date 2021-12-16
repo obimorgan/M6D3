@@ -9,11 +9,15 @@ router
   .get(async (req, res, next) => {
     try {
       const product = await Product.findAll({
-      include: [
-        {
-          model: Category,
-        }
-      ]
+        include: [
+          {
+            model: Category,
+            through: { attributes: [] }, // include category without join table
+            attributes: { exclude: ["createdAt", "updatedAt"] }, //exclude attributes from included Category table
+          },
+          { model: Review, include: User }, // includes related review with User who wrote the Review
+          User,
+        ],
       });
       res.send(product);
     } catch (e) {
