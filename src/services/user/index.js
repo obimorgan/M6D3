@@ -16,6 +16,7 @@ router
   })
   .post(async (req, res, next) => {
     try {
+      console.log(req.body)
       const user = await User.create(req.body);
       res.send(user);
     } catch (e) {
@@ -53,6 +54,16 @@ router
   })
   .delete(async (req, res, next) => {
     try {
+      const result = await User.destroy({
+        where: {
+          id: req.params.id
+        }
+      })
+      if (result > 0){
+        res.send("ok")
+      } else {
+        res.status(404).send("Not found")
+      }
     } catch (e) {
       console.log(e);
       next(e);

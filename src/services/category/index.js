@@ -1,21 +1,14 @@
 import express from "express";
-import { products } from "../../data/product.js";
-import { Product, Review, Category, User } from "../../db/models/index.js";
-// import { Op, Sequelize } from "sequelize";
+import { Product, User, Review, Category } from "../../db/models/index.js";
+import { Op } from "sequelize";
 const router = express.Router();
 
 router
   .route("/")
   .get(async (req, res, next) => {
     try {
-      const product = await Product.findAll({
-      include: [
-        {
-          model: Category,
-        }
-      ]
-      });
-      res.send(product);
+      const data = await Category.findAll();
+      res.send(data);
     } catch (e) {
       console.log(e);
       next(e);
@@ -23,8 +16,6 @@ router
   })
   .post(async (req, res, next) => {
     try {
-      const product = await Product.create(req.body);
-      res.send(product);
     } catch (e) {
       console.log(e);
       next(e);
@@ -33,7 +24,12 @@ router
 
 router.route("/bulk").post(async (req, res, next) => {
   try {
-    const data = await Product.bulkCreate(products);
+    const data = await Category.bulkCreate([
+      { name: "Multimedia" },
+      { name: "Hardware" },
+      { name: "Electronics" },
+      { name: "Leisure" },
+    ]);
 
     res.send(data);
   } catch (error) {
