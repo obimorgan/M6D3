@@ -8,41 +8,41 @@ router
   .route("/")
   .get(async (req, res, next) => {
     try {
-      const reviews = await Review.findAll()
-      //   {
-      //   include: Review,
-      //   where: {
-      //     ...(req.query.search && {
-      //       [Op.or]: [
-      //         {
-      //           title: { [Op.iLike]: `%${req.query.search}%` },
-      //         },
-      //         {
-      //           content: { [Op.iLike]: `%${req.query.search}%` },
-      //         },
-      //         //Option 1
-      //         {
-      //           "$user.name$": {
-      //             [Op.iLike]: "%" + req.query.search + "%",
-      //           },
-      //         },
-      //         //Option 2
-      //         // {
-      //         //   name: Sequelize.where(Sequelize.col(`"review.name"`), {
-      //         //     [Op.iLike]: "%" + req.query.search + "%",
-      //         //   }),
-      //         // },
-      //       ],
-      //     }),
+      const reviews = await Review.findAll(
+        {
+        include: Review,
+        where: {
+          ...(req.query.search && {
+            [Op.or]: [
+              {
+                title: { [Op.iLike]: `%${req.query.search}%` },
+              },
+              {
+                content: { [Op.iLike]: `%${req.query.search}%` },
+              },
+              //Option 1
+              {
+                "$user.name$": {
+                  [Op.iLike]: "%" + req.query.search + "%",
+                },
+              },
+              //Option 2
+              // {
+              //   name: Sequelize.where(Sequelize.col(`"review.name"`), {
+              //     [Op.iLike]: "%" + req.query.search + "%",
+              //   }),
+              // },
+            ],
+          }),
 
-      //     ...(req.query.category && {
-      //       category: {
-      //         [Op.in]: req.query.category.split(","),
-      //       },
-      //     }),
-      //   },
-      // }
-      // );
+          ...(req.query.category && {
+            category: {
+              [Op.in]: req.query.category.split(","),
+            },
+          }),
+        },
+      }
+      );
       res.send(reviews);
     } catch (e) {
       console.log(e);
