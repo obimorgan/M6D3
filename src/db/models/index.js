@@ -4,8 +4,7 @@ import Category from "./category.js"
 import User from "./user.js"
 import productCategory from "./productCategory.js"
 
-//hasMany
-//belongsTo
+
 Product.hasMany(Review, { onDelete: "CASCADE" });
 Review.belongsTo(Product, { onDelete: "CASCADE" });
 

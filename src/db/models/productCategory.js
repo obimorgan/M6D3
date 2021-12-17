@@ -4,7 +4,7 @@ import s from "sequelize";
 
 const { DataTypes } = s;
 
-const productCategory = sequelize.define(
+const ProductCategory = sequelize.define(
   "productCategory",
   {
     // isPopular: {
@@ -16,4 +16,4 @@ const productCategory = sequelize.define(
   }
 );
 
-export default productCategory;
+export default ProductCategory;

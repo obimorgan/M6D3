@@ -18,10 +18,6 @@ const Reviews = sequelize.define("reviews", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  // productId: {
-  //   type: DataTypes.STRING,
-  //   allowNull: false,
-  // },
 });
 
 export default Reviews;

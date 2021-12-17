@@ -1,6 +1,7 @@
+/** @format */
+
 import express from "express";
-import { products } from "../../data/product.js";
-import { Product, Review, Category, User } from "../../db/models/index.js";
+import { Product, productCategory } from "../../db/models/index.js";
 // import { Op, Sequelize } from "sequelize";
 const router = express.Router();
 
@@ -8,17 +9,18 @@ router
   .route("/")
   .get(async (req, res, next) => {
     try {
-      const product = await Product.findAll({
-        include: [
-          {
-            model: Category,
-            through: { attributes: [] }, // include category without join table
-            attributes: { exclude: ["createdAt", "updatedAt"] }, //exclude attributes from included Category table
-          },
-          { model: Review, include: User }, // includes related review with User who wrote the Review
-          User,
-        ],
-      });
+      const product = await Product.findAll();
+       // {
+       //   include: [
+       //     {
+       //       model: Category,
+       //       through: { attributes: [] }, // include category without join table
+       //       attributes: { exclude: ["createdAt", "updatedAt"] }, //exclude attributes from included Category table
+       //     },
+       //     // { model: Review, include: User }, // includes related review with User who wrote the Review
+       //     // User,
+       //   ],
+       // });
       res.send(product);
     } catch (e) {
       console.log(e);
@@ -27,8 +29,19 @@ router
   })
   .post(async (req, res, next) => {
     try {
-      const product = await Product.create(req.body);
-      res.send(product);
+      const { categoryId, ...rest } = req.body;
+      const product = await Product.create(rest);
+      if (product) {
+        console.log(product.id);
+        const dataToInsert = categoryId.map((id) => ({
+          categoryId: id,
+          productId: product.Id,
+        }));
+        // inserts modified array to Productategory
+        const data = await Product.bulkCreate(dataToInsert);
+        res.send({ product, productCategory: data });
+      }
+      res.send(rest);
     } catch (e) {
       console.log(e);
       next(e);
